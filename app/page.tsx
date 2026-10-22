@@ -65,6 +65,9 @@ readFile(configFile, (err, rawData) => {
   // );
 });
 
+// Temp until we can get key from config.yaml
+const API_KEY = 1;
+
 try {
   const response = await fetch("http://localhost:8096/Items/Counts", {
     method: "GET",
