@@ -1,0 +1,9 @@
+services:
+  app:
+    image: app:0.1.0
+    container_name: app
+    ports:
+      - 3000:3000
+    volumes:
+      - ./config:/config
+    restart: unless-stopped

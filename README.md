@@ -1,26 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Docker App
+
+This is a [Next.js](https://nextjs.org) made to be run within docker.
 
 ## Getting Started
+
+You will need to clone this repo to your computer to run it
+
+### Running in Docker
+
+To run this project within docker, run:
+
+```bash
+docker compose up --build
+```
+
+Or build into image with :
+
+```bash
+docker build -t app:latest
+```
+
+and make a docker-compose.yml file:
+
+```bash
+services:
+  app:
+    image: app:latest
+    container_name: app
+    volumes:
+      - /path/to/config:/config
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+```
+
+### Running with development server
 
 First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
+<!-- or
+```bash
+yarn dev
+```
+or
+```bash
+pnpm dev
+```
+or
+```bash
+bun dev
+``` -->
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
+## Next.js
 
 To learn more about Next.js, take a look at the following resources:
 
@@ -29,8 +65,15 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Based on
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project is based on:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Glance](https://github.com/glanceapp/glance)
+- [Homepage](https://github.com/gethomepage/homepage)
+
+## Supported apps
+
+This app currently has support for the following apps:
+
+- none

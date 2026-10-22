@@ -1,12 +1,16 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: [
+    "127.0.0.1",
+    "http://127.0.0.1:3000",
+    "localhost:3000",
+    "192.168.0.9:3000",
+  ],
   /* config options here */
-  experimental: {
-    agentFeedback: true,
-  },
-  cacheComponents: true,
-  partialPrefetching: true,
+  // cacheComponents: true,
+  // partialPrefetching: true,
+  output: "standalone",
   turbopack: {
     rules: {
       "*.css": {
@@ -15,6 +19,9 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  // logging: {
+  //   browserToTerminal: false,
+  // },
 };
 
 export default nextConfig;

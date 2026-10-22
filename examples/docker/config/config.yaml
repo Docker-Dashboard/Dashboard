@@ -1,0 +1,6 @@
+config:
+  tiles:
+    2
+  jellyfin:
+    apikey:
+      1234
