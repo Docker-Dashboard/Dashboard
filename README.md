@@ -77,3 +77,17 @@ This project is based on:
 This app currently has support for the following apps:
 
 - none
+
+## Planned widget additions
+
+The following are planned to be added in the future:
+
+- Calendar
+- Weather
+- Live Twitch channels
+- GitHub releases
+- Pi-Hole
+- Seerr
+- Jellyfin
+- Uptime Kuma
+- and many more!
