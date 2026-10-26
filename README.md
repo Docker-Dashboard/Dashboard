@@ -2,6 +2,9 @@
 
 This is a [Next.js](https://nextjs.org) made to be run within docker.
 
+![Next Build](https://github.com/Docker-Dashboard/Dashboard/actions/workflows/build.yml/badge.svg)
+![Docker Build](https://github.com/Docker-Dashboard/Dashboard/actions/workflows/dockerBuild.yml/badge.svg}|)
+
 ## Getting Started
 
 You will need to clone this repo to your computer to run it
@@ -32,6 +35,20 @@ services:
     ports:
       - 3000:3000
     restart: unless-stopped
+```
+
+### Running without Docker
+
+To run without Docker, you will need to first build the page:
+
+```bash
+npm run build
+```
+
+Then you can start the server:
+
+```bash
+node .next/standalone/server.js
 ```
 
 ### Running with development server
