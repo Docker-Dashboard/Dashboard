@@ -3,7 +3,7 @@
 This is a [Next.js](https://nextjs.org) made to be run within docker.
 
 ![Next Build](https://github.com/Docker-Dashboard/Dashboard/actions/workflows/build.yml/badge.svg)
-![Docker Build](https://github.com/Docker-Dashboard/Dashboard/actions/workflows/dockerBuild.yml/badge.svg}|)
+![Docker Build](https://github.com/Docker-Dashboard/Dashboard/actions/workflows/dockerBuild.yml/badge.svg)
 
 ## Getting Started
 
