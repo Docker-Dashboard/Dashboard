@@ -2,6 +2,9 @@
 
 This is a [Next.js](https://nextjs.org) made to be run within docker.
 
+![Next Build](https://github.com/Docker-Dashboard/Dashboard/actions/workflows/build.yml/badge.svg)
+![Docker Build](https://github.com/Docker-Dashboard/Dashboard/actions/workflows/dockerBuild.yml/badge.svg)
+
 ## Getting Started
 
 You will need to clone this repo to your computer to run it
@@ -32,6 +35,20 @@ services:
     ports:
       - 3000:3000
     restart: unless-stopped
+```
+
+### Running without Docker
+
+To run without Docker, you will need to first build the page:
+
+```bash
+npm run build
+```
+
+Then you can start the server:
+
+```bash
+node .next/standalone/server.js
 ```
 
 ### Running with development server
@@ -84,3 +101,17 @@ This app currently has support for the following apps:
 This projects uses the following external services:
 
 - [selfh.st](https://selfh.st/icons/), used for automatically retreving icons
+
+## Planned widget additions
+
+The following are planned to be added in the future:
+
+- Calendar
+- Weather
+- Live Twitch channels
+- GitHub releases
+- Pi-Hole
+- Seerr
+- Jellyfin
+- Uptime Kuma
+- and many more!
