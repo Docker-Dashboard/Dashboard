@@ -19,9 +19,12 @@ const nextConfig: NextConfig = {
       },
     },
   },
-  // logging: {
-  //   browserToTerminal: false,
+  // watchOptions: {
+  //   aggregateTimeout: 200,
   // },
+  logging: {
+    browserToTerminal: false,
+  },
 };
 
 export default nextConfig;

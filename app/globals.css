@@ -19,8 +19,109 @@
   }
 }
 
+html,
 body {
   background: var(--background);
   color: var(--foreground);
+  display: flex;
   font-family: Arial, Helvetica, sans-serif;
+  scrollbar-gutter: stable;
+  font-size: clamp(3.5px, 3vh, 35px);
+  height: 100vh;
+  margin: 0;
+  width: 100vw;
+}
+
+.main {
+  width: 100vw;
+  /* background-color: #ababab; */
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.data {
+  width: 95vw;
+  height: fit-content;
+  /* display: flex; */
+  /* background-color: #321123; */
+  /* justify-content: center; */
+  /* align-items: center; */
+}
+
+.dashboardBoxJellyfin2,
+.dashboardBoxSeerr2 {
+  align-items: center;
+  background-color: #28282877;
+  border-radius: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  /* font-family:
+    "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans",
+    Arial, sans-serif; */
+  font-weight: bold;
+  height: fit-content;
+  gap: 0vw;
+  padding: 2vh;
+  /* position: static; */
+  width: 45%;
+}
+
+.dashboardBoxJellyfin3,
+.dashboardBoxSeerr3 {
+  align-items: flex-start;
+  background-color: #28282877;
+  border-radius: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  /* font-family:
+    "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans",
+    Arial, sans-serif; */
+  font-weight: bold;
+  height: fit-content;
+  padding: 0.1vw;
+  /* position: static; */
+  width: 33%;
+}
+
+.dashboardDataJellyfinContent,
+.dashboardDataSeerrContent {
+  /* align-items: flex-start; */
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 10px;
+  gap: 1vw;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.dashboardBoxJellyfinInfo,
+.dashboardBoxSeerrInfo {
+  /* align-items: flex-start; */
+  display: flex;
+  flex-direction: row;
+  /* width: 100%;
+  padding: 10px; */
+  gap: 1vw;
+  /* justify-content: center; */
+  align-items: center;
+  /* flex-wrap: wrap; */
+}
+
+.dashboardBoxMain {
+  /* align-items: flex-start; */
+  /* background-color: #abcabc; */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1vw;
+  margin: 1vh;
 }

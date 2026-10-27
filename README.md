@@ -76,4 +76,11 @@ This project is based on:
 
 This app currently has support for the following apps:
 
-- none
+- Jellyfin
+- Seerr
+
+## External services used
+
+This projects uses the following external services:
+
+- [selfh.st](https://selfh.st/icons/), used for automatically retreving icons

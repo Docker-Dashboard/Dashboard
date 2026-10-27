@@ -1,12 +1,16 @@
-import React from "react";
+import React, { JSX } from "react";
 import Image from "next/image";
-import { access, constants, readFile, writeFile, mkdir } from "node:fs";
-import { fileURLToPath } from "node:url";
+import { unstable_noStore } from "next/cache";
+import { access, constants, writeFile, mkdir } from "node:fs";
+import { readFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import os from "node:os";
 import { parse } from "yaml";
+import { jellyApi } from "@/api/services/jellyfin.js";
+import { seerrApi } from "@/api/services/seerr.js";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 let dashboardData = <></>;
 
@@ -14,18 +18,27 @@ const defaultConfigContent = `config:
   tiles:
     2
   jellyfin:
+    ip:
+      "127.0.0.1"
+    port:
+      "8096"
     apikey:
-      1234`;
+      1234
+    tiles:
+      movies
+      series
+      episodes
+      songs`;
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const configFile =
+  process.env.NODE_ENV == "production"
+    ? "/config/config.yaml"
+    : join(process.cwd(), "config", "config.yaml");
 
-let configFile = join(__dirname, "config", "config.yaml");
-let configDir = join(__dirname, "config");
-
-if (process.env.NODE_ENV == "production") {
-  configFile = "/config/config.yaml";
-}
+const configDir =
+  process.env.NODE_ENV == "production"
+    ? "/config"
+    : join(process.cwd(), "config");
 
 access(configFile, constants.F_OK, (err) => {
   console.log(`${configFile} ${err ? "does not exist" : "exists"}`);
@@ -50,54 +63,65 @@ access(configFile, constants.R_OK, (err) => {
   dashboardData = <p>Error: Could not read config file</p>;
 });
 
-readFile(configFile, (err, rawData) => {
-  if (err) throw err;
-  const data = rawData + "";
-  // console.log(rawData);
-  console.log(data);
+async function run() {
+  const data = await readFile(configFile, "utf-8");
+
+  const finalData = [];
+
+  // console.log(data);
   const yamlData = parse(data);
 
-  // dashboardData = (
-  //   <div>
-  //     <p>{data}</p>
-  //     {/* <p>{data}</p> */}
-  //   </div>
-  // );
-});
-
-// Temp until we can get key from config.yaml
-const API_KEY = 1;
-
-try {
-  const response = await fetch("http://localhost:8096/Items/Counts", {
-    method: "GET",
-    headers: {
-      Authorization: `MediaBrowser Token="${API_KEY}"`,
-      "Content-Type": "application/json",
-      Accept: "application/json",
+  const tiles = yamlData.config?.tiles;
+  const map: Record<string, (config: any, key: number) => Promise<any>> = {
+    jellyfin: async (config: any, key: number) => {
+      return await jellyApi(
+        config?.apikey,
+        config?.ip,
+        config?.port,
+        tiles,
+        config?.config,
+        key,
+      );
     },
-  });
+    seerr: async (config: any, key: number) => {
+      return await seerrApi(
+        config?.apikey,
+        config?.ip,
+        config?.port,
+        tiles,
+        config?.config,
+        key,
+      );
+    },
+  };
+  let key = 0;
+  if (yamlData.apps) {
+    const order = Object.keys(yamlData.apps);
 
-  const data = await response.json();
+    for (const app of order) {
+      const config = yamlData.apps[app];
+      if (typeof map[app] == "function" && config) {
+        const data = await map[app](config, key);
+        key += 1;
+        finalData.push(data);
+      } else {
+        console.warn(
+          "Could not find valid app, this could be caused by the app not yet supporting this service or a typo!",
+        );
+      }
+    }
+  }
 
-  console.log(data);
-  dashboardData = (
-    <div>
-      <p>Movies = {data.MovieCount}</p>
-      <p>Series = {data.SeriesCount}</p>
-      <p>Episodes = {data.EpisodeCount}</p>
-      <p>Songs = {data.SongCount}</p>
-    </div>
-  );
-} catch (err) {
-  console.error(err);
+  dashboardData = <div className="dashboardBoxMain">{finalData}</div>;
 }
 
-export default function Home() {
+export default async function Home() {
+  unstable_noStore();
+  await run();
   return (
-    <div>
+    <div className="main">
       <p>test</p>
-      {dashboardData}
+      <div className="data">{dashboardData}</div>
     </div>
   );
 }

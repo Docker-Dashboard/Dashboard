@@ -1,6 +1,31 @@
 config:
   tiles:
     2
+apps:
   jellyfin:
+    ip:
+      "127.0.0.1"
+    port:
+      "8096"
     apikey:
-      1234
+      "jellyfinApiKey"
+    config:
+      movies
+      series
+      episodes
+      artists
+      programs
+      trailers
+      songs
+      albums
+      musicvideos
+      boxsets
+      books
+      items
+  seerr:
+    ip:
+      "127.0.0.1"
+    port:
+      "5055"
+    apikey:
+      "seerrApiKey"
