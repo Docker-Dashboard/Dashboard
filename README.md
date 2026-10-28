@@ -17,19 +17,19 @@ To run this project within docker, run:
 docker compose up --build
 ```
 
-Or build into image with :
+Or build an image with :
 
 ```bash
-docker build -t app:latest
+docker build -t dashboard:latest
 ```
 
 and make a docker-compose.yml file:
 
 ```bash
 services:
-  app:
-    image: app:latest
-    container_name: app
+  dashboard:
+    image: dashboard:latest
+    container_name: dashboard
     volumes:
       - /path/to/config:/config
     ports:
@@ -111,7 +111,5 @@ The following are planned to be added in the future:
 - Live Twitch channels
 - GitHub releases
 - Pi-Hole
-- Seerr
-- Jellyfin
 - Uptime Kuma
 - and many more!
