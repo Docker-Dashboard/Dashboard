@@ -25,6 +25,14 @@ const nextConfig: NextConfig = {
   logging: {
     browserToTerminal: false,
   },
+  webpack(config, { dev }) {
+    if (dev) {
+      config.watchOptions = {
+        aggregateTimeout: 1000,
+      };
+    }
+    return config;
+  },
 };
 
 export default nextConfig;

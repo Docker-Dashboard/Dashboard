@@ -1,11 +1,8 @@
 import Image from "next/image";
+import { Suspense } from "react";
 
-export async function seerrApi(apiKey, ip, port, tiles, config, key) {
-  console.log("Sending api request to Seerr");
+async function seerrData(apiKey, ip, port, config) {
   try {
-    if (!apiKey) {
-      return;
-    }
     const response = await fetch(`http://${ip}:${port}/api/v1/request/count`, {
       method: "GET",
       headers: {
@@ -15,12 +12,14 @@ export async function seerrApi(apiKey, ip, port, tiles, config, key) {
       },
     });
 
-    console.log("Raw server data: ", response);
+    if (!response.ok) {
+      throw `Api response error ${response.status}`;
+    }
+
+    // console.log("Raw server data: ", response);
     const data = await response.json();
 
-    console.log(data);
-
-    // const icon = getIcon("seerr");
+    // console.log(data);
 
     const total = config.includes("total");
     const movies = config.includes("movies");
@@ -33,12 +32,66 @@ export async function seerrApi(apiKey, ip, port, tiles, config, key) {
     const completed = config.includes("completed");
 
     const dataOut = (
+      <div className="dashboardDataSeerrContent">
+        {total ? (
+          <p className="dashboardDataSeerr">Total = {data.total}</p>
+        ) : null}
+        {movies ? (
+          <p className="dashboardDataSeerr">Movies = {data.movie}</p>
+        ) : null}
+        {series ? (
+          <p className="dashboardDataSeerr">Series = {data.tv}</p>
+        ) : null}
+        {pending ? (
+          <p className="dashboardDataSeerr">Pending = {data.pending}</p>
+        ) : null}
+        {approved ? (
+          <p className="dashboardDataSeerr">Approved = {data.approved}</p>
+        ) : null}
+        {declined ? (
+          <p className="dashboardDataSeerr">Declined = {data.declined}</p>
+        ) : null}
+        {processing ? (
+          <p className="dashboardDataSeerr">Processing = {data.processing}</p>
+        ) : null}
+        {available ? (
+          <p className="dashboardDataSeerr">Available = {data.available}</p>
+        ) : null}
+        {completed ? (
+          <p className="dashboardDataSeerr">Completed = {data.completed}</p>
+        ) : null}
+      </div>
+    );
+    return dataOut;
+  } catch (err) {
+    return (
+      <div className="dashboardDataSeerrContent">
+        <p className="dashboardDataSeerr">{"" + err}</p>
+      </div>
+    );
+  }
+}
+
+export async function seerrApi(apiKey, ip, port, tiles, config, key) {
+  console.log("Sending api request to Seerr");
+  try {
+    if (!apiKey || !ip || !port || !tiles || !config || !key) {
+      console.log("invalid input data");
+      console.log(!apiKey);
+      console.log(!ip);
+      console.log(!port);
+      console.log(!tiles);
+      console.log(!config);
+      console.log(!key);
+      return;
+    }
+    return (
       <div key={key} className={`dashboardBoxSeerr${tiles}`}>
         <div className="dashboardBoxSeerrInfo">
           <div className="dashboardBoxSeerrIcon">
             <Image
               src={`https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/seerr.svg`}
-              alt={`seerr icon`}
+              alt={`Seerr icon`}
               width={24}
               height={24}
               unoptimized
@@ -48,38 +101,9 @@ export async function seerrApi(apiKey, ip, port, tiles, config, key) {
             <p>Seerr</p>
           </div>
         </div>
-        <div className="dashboardDataSeerrContent">
-          {total ? (
-            <p className="dashboardDataSeerr">Total = {data.total}</p>
-          ) : null}
-          {movies ? (
-            <p className="dashboardDataSeerr">Movies = {data.movie}</p>
-          ) : null}
-          {series ? (
-            <p className="dashboardDataSeerr">Series = {data.tv}</p>
-          ) : null}
-          {pending ? (
-            <p className="dashboardDataSeerr">Pending = {data.pending}</p>
-          ) : null}
-          {approved ? (
-            <p className="dashboardDataSeerr">Approved = {data.approved}</p>
-          ) : null}
-          {declined ? (
-            <p className="dashboardDataSeerr">Declined = {data.declined}</p>
-          ) : null}
-          {processing ? (
-            <p className="dashboardDataSeerr">Processing = {data.processing}</p>
-          ) : null}
-          {available ? (
-            <p className="dashboardDataSeerr">Available = {data.available}</p>
-          ) : null}
-          {completed ? (
-            <p className="dashboardDataSeerr">Completed = {data.completed}</p>
-          ) : null}
-        </div>
+        <Suspense>{seerrData(apiKey, ip, port, config)}</Suspense>
       </div>
     );
-    return dataOut;
   } catch (err) {
     console.error(err);
     return (

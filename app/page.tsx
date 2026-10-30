@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import React, { JSX, Suspense } from "react";
 import Image from "next/image";
 import { unstable_noStore } from "next/cache";
 import { access, constants, writeFile, mkdir } from "node:fs";
@@ -6,7 +6,9 @@ import { readFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import os from "node:os";
 import { parse } from "yaml";
+import { gitHubApi } from "@/api/external/github.js";
 import { jellyApi } from "@/api/services/jellyfin.js";
+import { piholeApi } from "@/api/services/pihole.js";
 import { seerrApi } from "@/api/services/seerr.js";
 
 export const dynamic = "force-dynamic";
@@ -64,64 +66,87 @@ access(configFile, constants.R_OK, (err) => {
 });
 
 async function run() {
-  const data = await readFile(configFile, "utf-8");
+  try {
+    const data = await readFile(configFile, "utf-8");
 
-  const finalData = [];
+    const finalData = [];
 
-  // console.log(data);
-  const yamlData = parse(data);
+    // console.log(data);
+    const yamlData = parse(data);
 
-  const tiles = yamlData.config?.tiles;
-  const map: Record<string, (config: any, key: number) => Promise<any>> = {
-    jellyfin: async (config: any, key: number) => {
-      return await jellyApi(
-        config?.apikey,
-        config?.ip,
-        config?.port,
-        tiles,
-        config?.config,
-        key,
-      );
-    },
-    seerr: async (config: any, key: number) => {
-      return await seerrApi(
-        config?.apikey,
-        config?.ip,
-        config?.port,
-        tiles,
-        config?.config,
-        key,
-      );
-    },
-  };
-  let key = 0;
-  if (yamlData.apps) {
-    const order = Object.keys(yamlData.apps);
-
-    for (const app of order) {
-      const config = yamlData.apps[app];
-      if (typeof map[app] == "function" && config) {
-        const data = await map[app](config, key);
-        key += 1;
-        finalData.push(data);
-      } else {
-        console.warn(
-          "Could not find valid app, this could be caused by the app not yet supporting this service or a typo!",
+    const tiles = yamlData.config?.tiles;
+    const map: Record<string, (config: any, key: number) => Promise<any>> = {
+      jellyfin: async (config: any, key: number) => {
+        return await jellyApi(
+          config?.apikey,
+          config?.ip,
+          config?.port,
+          tiles,
+          config?.config,
+          key,
         );
+      },
+      seerr: async (config: any, key: number) => {
+        return await seerrApi(
+          config?.apikey,
+          config?.ip,
+          config?.port,
+          tiles,
+          config?.config,
+          key,
+        );
+      },
+      pihole: async (config: any, key: number) => {
+        return await piholeApi(
+          config?.apikey,
+          config?.ip,
+          config?.port,
+          tiles,
+          config?.config,
+          key,
+        );
+      },
+      github: async (config: any, key: number) => {
+        return await gitHubApi(config?.apikey, tiles, config?.config, key);
+      },
+    };
+    let key = 1;
+    if (yamlData.apps) {
+      const order = Object.keys(yamlData.apps);
+
+      for (const app of order) {
+        const config = yamlData.apps[app];
+        if (typeof map[app] == "function" && config) {
+          const data = await map[app](config, key);
+          key += 1;
+          finalData.push(data);
+        } else {
+          console.warn(
+            `Could not find valid app, this could be caused by the app not yet supporting this service or a typo!`,
+          );
+        }
       }
     }
-  }
 
-  dashboardData = <div className="dashboardBoxMain">{finalData}</div>;
+    dashboardData = <div className="dashboardBoxMain">{finalData}</div>;
+    return <div className="data">{dashboardData}</div>;
+  } catch (err) {
+    return <div className="error">{"" + err}</div>;
+  }
 }
 
 export default async function Home() {
   unstable_noStore();
-  await run();
   return (
     <div className="main">
-      <p>test</p>
-      <div className="data">{dashboardData}</div>
+      <div className="dashboardInfo">
+        <p className="dashboardInfoName">Dashboard | Version: 1.0.0</p>
+      </div>
+      {/* <p>Loading</p> */}
+      {/* <div className="data">{dashboardData}</div> */}
+      <Suspense fallback={<p className="loadingText">Loading...</p>}>
+        {run()}
+      </Suspense>
     </div>
   );
 }

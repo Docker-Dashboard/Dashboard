@@ -1,11 +1,8 @@
 import Image from "next/image";
+import { Suspense } from "react";
 
-export async function jellyApi(apiKey, ip, port, tiles, config, key) {
-  console.log("Sending api request to Jellyfin");
+async function jellyfinData(apiKey, ip, port, config) {
   try {
-    if (!apiKey) {
-      return;
-    }
     const response = await fetch(`http://${ip}:${port}/Items/Counts`, {
       method: "GET",
       headers: {
@@ -14,6 +11,10 @@ export async function jellyApi(apiKey, ip, port, tiles, config, key) {
         Accept: "application/json",
       },
     });
+
+    if (!response.ok) {
+      throw `Api response error ${response.status}`;
+    }
 
     // console.log("Raw server data: ", response);
     const data = await response.json();
@@ -34,6 +35,79 @@ export async function jellyApi(apiKey, ip, port, tiles, config, key) {
     const items = config.includes("items");
 
     const dataOut = (
+      <div className="dashboardDataJellyfinContent">
+        {movies ? (
+          <p className="dashboardDataJellyfin">Movies = {data.MovieCount}</p>
+        ) : null}
+        {series ? (
+          <p className="dashboardDataJellyfin">Series = {data.SeriesCount}</p>
+        ) : null}
+        {episodes ? (
+          <p className="dashboardDataJellyfin">
+            Episodes = {data.EpisodeCount}
+          </p>
+        ) : null}
+        {artists ? (
+          <p className="dashboardDataJellyfin">Artists = {data.ArtistCount}</p>
+        ) : null}
+        {programs ? (
+          <p className="dashboardDataJellyfin">
+            Programs = {data.ProgramCount}
+          </p>
+        ) : null}
+        {trailers ? (
+          <p className="dashboardDataJellyfin">
+            Trailers = {data.TrailerCount}
+          </p>
+        ) : null}
+        {songs ? (
+          <p className="dashboardDataJellyfin">Songs = {data.SongCount}</p>
+        ) : null}
+        {albums ? (
+          <p className="dashboardDataJellyfin">Albums = {data.AlbumCount}</p>
+        ) : null}
+        {musicVideos ? (
+          <p className="dashboardDataJellyfin">
+            Music Videos = {data.MusicVideoCount}
+          </p>
+        ) : null}
+        {boxSets ? (
+          <p className="dashboardDataJellyfin">Box Sets = {data.BoxSetCount}</p>
+        ) : null}
+        {books ? (
+          <p className="dashboardDataJellyfin">Books = {data.BookCount}</p>
+        ) : null}
+        {items ? (
+          <p className="dashboardDataJellyfin">Items = {data.ItemCount}</p>
+        ) : null}
+      </div>
+    );
+    // console.log("Array Content: ", content);
+    // console.log("Sending back: ", dataOut);
+    return dataOut;
+  } catch (err) {
+    return (
+      <div className="dashboardDataJellyfinContent">
+        <p className="dashboardDataJellyfin">{"" + err}</p>
+      </div>
+    );
+  }
+}
+
+export async function jellyApi(apiKey, ip, port, tiles, config, key) {
+  console.log("Sending api request to Jellyfin");
+  try {
+    if (!apiKey || !ip || !port || !tiles || !config || !key) {
+      console.log("invalid input data");
+      console.log(!apiKey);
+      console.log(!ip);
+      console.log(!port);
+      console.log(!tiles);
+      console.log(!config);
+      console.log(!key);
+      return;
+    }
+    return (
       <div key={key} className={`dashboardBoxJellyfin${tiles}`}>
         <div className="dashboardBoxJellyfinInfo">
           <div className="dashboardBoxJellyfinIcon">
@@ -49,61 +123,11 @@ export async function jellyApi(apiKey, ip, port, tiles, config, key) {
             <p>Jellyfin</p>
           </div>
         </div>
-        <div className="dashboardDataJellyfinContent">
-          {movies ? (
-            <p className="dashboardDataJellyfin">Movies = {data.MovieCount}</p>
-          ) : null}
-          {series ? (
-            <p className="dashboardDataJellyfin">Series = {data.SeriesCount}</p>
-          ) : null}
-          {episodes ? (
-            <p className="dashboardDataJellyfin">
-              Episodes = {data.EpisodeCount}
-            </p>
-          ) : null}
-          {artists ? (
-            <p className="dashboardDataJellyfin">
-              Artists = {data.ArtistCount}
-            </p>
-          ) : null}
-          {programs ? (
-            <p className="dashboardDataJellyfin">
-              Programs = {data.ProgramCount}
-            </p>
-          ) : null}
-          {trailers ? (
-            <p className="dashboardDataJellyfin">
-              Trailers = {data.TrailerCount}
-            </p>
-          ) : null}
-          {songs ? (
-            <p className="dashboardDataJellyfin">Songs = {data.SongCount}</p>
-          ) : null}
-          {albums ? (
-            <p className="dashboardDataJellyfin">Albums = {data.AlbumCount}</p>
-          ) : null}
-          {musicVideos ? (
-            <p className="dashboardDataJellyfin">
-              Music Videos = {data.MusicVideoCount}
-            </p>
-          ) : null}
-          {boxSets ? (
-            <p className="dashboardDataJellyfin">
-              Box Sets = {data.BoxSetCount}
-            </p>
-          ) : null}
-          {books ? (
-            <p className="dashboardDataJellyfin">Books = {data.BookCount}</p>
-          ) : null}
-          {items ? (
-            <p className="dashboardDataJellyfin">Items = {data.ItemCount}</p>
-          ) : null}
-        </div>
+        <Suspense fallback={<p className="loadingText">Loading...</p>}>
+          {jellyfinData(apiKey, ip, port, config)}
+        </Suspense>
       </div>
     );
-    // console.log("Array Content: ", content);
-    // console.log("Sending back: ", dataOut);
-    return dataOut;
   } catch (err) {
     console.error(err);
     return (
