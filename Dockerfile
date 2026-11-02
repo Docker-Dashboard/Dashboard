@@ -1,21 +1,3 @@
-# FROM node:24.21
-
-# WORKDIR /app
-
-# COPY package.json package-lock.json ./  
-
-# RUN ls
-
-# RUN npm install
-
-# COPY . .
-
-# RUN npm run build
-
-# EXPOSE 3000
-
-# CMD ["npm", "run", "start"]
-
 # ============================================
 # Stage 1: Dependencies Installation Stage
 # ============================================

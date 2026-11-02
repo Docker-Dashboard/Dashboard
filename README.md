@@ -75,6 +75,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Next.js
 
+This project uses Next.js
+
 To learn more about Next.js, take a look at the following resources:
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
@@ -95,12 +97,17 @@ This app currently has support for the following apps:
 
 - Jellyfin
 - Seerr
+- Pi-Hole (Basic support)
+- GitHub releases
+- Radarr
+- Sonarr
 
 ## External services used
 
 This projects uses the following external services:
 
 - [selfh.st](https://selfh.st/icons/), used for automatically retreving icons
+- [GitHub.com](https://github.com), used for the GitHub releases widget
 
 ## Planned widget additions
 
@@ -109,7 +116,7 @@ The following are planned to be added in the future:
 - Calendar
 - Weather
 - Live Twitch channels
-- GitHub releases
-- Pi-Hole
+<!-- No idea on how to add Twitch channels to dashboard, feel free to try, it must only get which channels from user and nothing else -->
+- Home Assistant
 - Uptime Kuma
 - and many more!
