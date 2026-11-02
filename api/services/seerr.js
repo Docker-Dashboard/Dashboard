@@ -72,42 +72,45 @@ async function seerrData(apiKey, ip, port, config) {
   }
 }
 
-export async function seerrApi(apiKey, ip, port, tiles, config, key) {
+export async function seerrApi(apiKey, ip, port, config, key) {
   console.log("Sending api request to Seerr");
   try {
-    if (!apiKey || !ip || !port || !tiles || !config || !key) {
+    if (!apiKey || !ip || !port || !config || !key) {
       console.log("invalid input data");
       console.log(!apiKey);
       console.log(!ip);
       console.log(!port);
-      console.log(!tiles);
       console.log(!config);
       console.log(!key);
       return;
     }
     return (
-      <div key={key} className={`dashboardBoxSeerr${tiles}`}>
-        <div className="dashboardBoxSeerrInfo">
-          <div className="dashboardBoxSeerrIcon">
-            <Image
-              src={`https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/seerr.svg`}
-              alt={`Seerr icon`}
-              width={24}
-              height={24}
-              unoptimized
-            />
+      <a key={key} href={`http://${ip}:${port}/`}>
+        <div className="dashboardBoxSeerr">
+          <div className="dashboardBoxSeerrInfo">
+            <div className="dashboardBoxSeerrIcon">
+              <Image
+                src={`https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/seerr.svg`}
+                alt={`Seerr icon`}
+                width={24}
+                height={24}
+                unoptimized
+              />
+            </div>
+            <div className="dashboardBoxSeerrName">
+              <p>Seerr</p>
+            </div>
           </div>
-          <div className="dashboardBoxSeerrName">
-            <p>Seerr</p>
-          </div>
+          <Suspense fallback={<p className="loadingText">Loading...</p>}>
+            {seerrData(apiKey, ip, port, config)}
+          </Suspense>
         </div>
-        <Suspense>{seerrData(apiKey, ip, port, config)}</Suspense>
-      </div>
+      </a>
     );
   } catch (err) {
     console.error(err);
     return (
-      <div key={key} className={`dashboardBoxSeerr${tiles}`}>
+      <div key={key} className="dashboardBoxSeerr">
         <div className="dashboardBoxSeerrInfo">
           <p>Seerr - Error!</p>
         </div>

@@ -26,7 +26,7 @@ body {
   display: flex;
   font-family: Arial, Helvetica, sans-serif;
   scrollbar-gutter: stable;
-  font-size: clamp(3.5px, 3vh, 35px);
+  font-size: clamp(3.5px, 2.2vh, 35px);
   height: 100vh;
   margin: 0;
   width: 100vw;
@@ -45,17 +45,18 @@ body {
 .data {
   width: 95vw;
   height: fit-content;
-  /* display: flex; */
+  display: block;
   /* background-color: #321123; */
-  /* justify-content: center; */
-  /* align-items: center; */
+  justify-content: center;
+  align-items: center;
 }
 
-.dashboardBoxJellyfin2,
-.dashboardBoxSeerr2,
-.dashboardBoxPiHole2,
-.dashboardBoxGitHub2,
-.dashboardBoxTwitch2 {
+.dashboardBoxJellyfin,
+.dashboardBoxSeerr,
+.dashboardBoxPiHole,
+.dashboardBoxGitHub,
+.dashboardBoxRadarr,
+.dashboardBoxSonarr {
   align-items: center;
   background-color: #28282877;
   border-radius: 10px;
@@ -70,35 +71,24 @@ body {
   gap: 0vw;
   padding: 2vh;
   /* position: static; */
-  width: 45%;
+  width: 100%;
 }
 
-.dashboardBoxJellyfin3,
-.dashboardBoxSeerr3,
-.dashboardBoxPiHole3,
-.dashboardBoxGitHub3,
-.dashboardBoxTwitch3 {
-  align-items: flex-start;
-  background-color: #28282877;
-  border-radius: 10px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  /* font-family:
-    "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans",
-    Arial, sans-serif; */
-  font-weight: bold;
-  height: fit-content;
-  padding: 0.1vw;
-  /* position: static; */
-  width: 33%;
+.dashboardBoxJellyfinName,
+.dashboardBoxSeerrName,
+.dashboardBoxPiHoleName,
+.dashboardBoxGitHubName,
+.dashboardBoxRadarrName,
+.dashboardBoxSonarrName {
+  font-size: clamp(3.5px, 3.2vh, 35px);
 }
 
 .dashboardDataJellyfinContent,
 .dashboardDataSeerrContent,
 .dashboardDataPiHoleContent,
 .dashboardDataGitHubContent,
-.dashboardDataTwitchContent {
+.dashboardDataRadarrContent,
+.dashboardDataSonarrContent {
   /* align-items: flex-start; */
   display: flex;
   flex-direction: row;
@@ -121,13 +111,14 @@ body {
 .dashboardBoxSeerrInfo,
 .dashboardBoxPiHoleInfo,
 .dashboardBoxGitHubInfo,
-.dashboardBoxTwitchInfo {
+.dashboardBoxRadarrInfo,
+.dashboardBoxSonarrInfo {
   /* align-items: flex-start; */
   display: flex;
   flex-direction: row;
   /* width: 100%;
   padding: 10px; */
-  gap: 1vw;
+  gap: 0.55vw;
   /* justify-content: center; */
   align-items: center;
   /* flex-wrap: wrap; */
@@ -146,17 +137,42 @@ div.dashboardDataGitHubReleases {
   /* background-color: #abcabc; */
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
+  /* flex-wrap: wrap; */
+  /* justify-content: center; */
   /* align-items: start; */
   gap: 1vw;
   margin: 1vh;
   margin-top: 4vh;
+  width: 90%;
+  height: fit-content;
+}
+
+.dashboardBoxMainLeft,
+.dashboardBoxMainRight {
+  display: flex;
+  flex-direction: column;
+  width: 22.5%;
+  height: fit-content;
+  gap: 2vh;
+}
+
+.dashboardBoxMainMiddle {
+  display: flex;
+  flex-direction: column;
+  width: 55%;
+  height: fit-content;
+  gap: 2vh;
+  /* margin: 2vh; */
 }
 
 .dashboardInfo {
   display: flex;
   flex-direction: row;
   color: #75757577;
-  font-size: clamp(5px, 2vh, 20px);
+  font-size: clamp(5px, 1.5vh, 20px);
+}
+
+a {
+  width: 100%;
+  height: fit-content;
 }

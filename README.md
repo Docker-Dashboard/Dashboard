@@ -99,6 +99,8 @@ This app currently has support for the following apps:
 - Seerr
 - Pi-Hole (Basic support)
 - GitHub releases
+- Radarr
+- Sonarr
 
 ## External services used
 
@@ -115,5 +117,6 @@ The following are planned to be added in the future:
 - Weather
 - Live Twitch channels
 <!-- No idea on how to add Twitch channels to dashboard, feel free to try, it must only get which channels from user and nothing else -->
+- Home Assistant
 - Uptime Kuma
 - and many more!

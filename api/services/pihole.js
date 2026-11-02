@@ -97,42 +97,45 @@ async function piholeData(apiKey, ip, port, config) {
   }
 }
 
-export async function piholeApi(apiKey, ip, port, tiles, config, key) {
+export async function piholeApi(apiKey, ip, port, config, key) {
   console.log("Sending api request to PiHole");
   try {
-    if (!apiKey || !ip || !port || !tiles || !config || !key) {
+    if (!apiKey || !ip || !port || !config || !key) {
       console.log("invalid input data");
       console.log(!apiKey);
       console.log(!ip);
       console.log(!port);
-      console.log(!tiles);
       console.log(!config);
       console.log(!key);
       return;
     }
     return (
-      <div key={key} className={`dashboardBoxPiHole${tiles}`}>
-        <div className="dashboardBoxPiHoleInfo">
-          <div className="dashboardBoxPiHoleIcon">
-            <Image
-              src={`https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/pi-hole.svg`}
-              alt={`PiHole icon`}
-              width={24}
-              height={24}
-              unoptimized
-            />
+      <a key={key} href={`http://${ip}:${port}/admin`}>
+        <div className="dashboardBoxPiHole">
+          <div className="dashboardBoxPiHoleInfo">
+            <div className="dashboardBoxPiHoleIcon">
+              <Image
+                src={`https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/pi-hole.svg`}
+                alt={`PiHole icon`}
+                width={24}
+                height={24}
+                unoptimized
+              />
+            </div>
+            <div className="dashboardBoxPiHoleName">
+              <p>PiHole</p>
+            </div>
           </div>
-          <div className="dashboardBoxPiHoleName">
-            <p>PiHole</p>
-          </div>
+          <Suspense fallback={<p className="loadingText">Loading...</p>}>
+            {piholeData(apiKey, ip, port, config)}
+          </Suspense>
         </div>
-        <Suspense>{piholeData(apiKey, ip, port, config)}</Suspense>
-      </div>
+      </a>
     );
   } catch (err) {
     console.error(err);
     return (
-      <div key={key} className={`dashboardBoxPiHole${tiles}`}>
+      <div key={key} className="dashboardBoxPiHole">
         <div className="dashboardBoxPiHoleName">
           <p>PiHole - Error!</p>
         </div>

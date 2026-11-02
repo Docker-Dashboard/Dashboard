@@ -94,44 +94,45 @@ async function jellyfinData(apiKey, ip, port, config) {
   }
 }
 
-export async function jellyApi(apiKey, ip, port, tiles, config, key) {
+export async function jellyApi(apiKey, ip, port, config, key) {
   console.log("Sending api request to Jellyfin");
   try {
-    if (!apiKey || !ip || !port || !tiles || !config || !key) {
+    if (!apiKey || !ip || !port || !config || !key) {
       console.log("invalid input data");
       console.log(!apiKey);
       console.log(!ip);
       console.log(!port);
-      console.log(!tiles);
       console.log(!config);
       console.log(!key);
       return;
     }
     return (
-      <div key={key} className={`dashboardBoxJellyfin${tiles}`}>
-        <div className="dashboardBoxJellyfinInfo">
-          <div className="dashboardBoxJellyfinIcon">
-            <Image
-              src={`https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/jellyfin.svg`}
-              alt={`Jellyfin icon`}
-              width={24}
-              height={24}
-              unoptimized
-            />
+      <a key={key} href={`http://${ip}:${port}`}>
+        <div className="dashboardBoxJellyfin">
+          <div className="dashboardBoxJellyfinInfo">
+            <div className="dashboardBoxJellyfinIcon">
+              <Image
+                src={`https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/jellyfin.svg`}
+                alt={`Jellyfin icon`}
+                width={24}
+                height={24}
+                unoptimized
+              />
+            </div>
+            <div className="dashboardBoxJellyfinName">
+              <p>Jellyfin</p>
+            </div>
           </div>
-          <div className="dashboardBoxJellyfinName">
-            <p>Jellyfin</p>
-          </div>
+          <Suspense fallback={<p className="loadingText">Loading...</p>}>
+            {jellyfinData(apiKey, ip, port, config)}
+          </Suspense>
         </div>
-        <Suspense fallback={<p className="loadingText">Loading...</p>}>
-          {jellyfinData(apiKey, ip, port, config)}
-        </Suspense>
-      </div>
+      </a>
     );
   } catch (err) {
     console.error(err);
     return (
-      <div key={key} className={`dashboardBoxJellyfin${tiles}`}>
+      <div key={key} className="dashboardBoxJellyfin">
         <div className="dashboardBoxJellyfinName">
           <p>Jellyfin - Error!</p>
         </div>

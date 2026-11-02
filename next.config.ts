@@ -28,7 +28,7 @@ const nextConfig: NextConfig = {
   webpack(config, { dev }) {
     if (dev) {
       config.watchOptions = {
-        aggregateTimeout: 1000,
+        aggregateTimeout: 1500,
       };
     }
     return config;

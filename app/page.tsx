@@ -8,8 +8,10 @@ import os from "node:os";
 import { parse } from "yaml";
 import { gitHubApi } from "@/api/external/github.js";
 import { jellyApi } from "@/api/services/jellyfin.js";
+import { radarrApi } from "@/api/services/radarr.js";
 import { piholeApi } from "@/api/services/pihole.js";
 import { seerrApi } from "@/api/services/seerr.js";
+import { sonarrApi } from "@/api/services/sonarr.js";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -69,19 +71,19 @@ async function run() {
   try {
     const data = await readFile(configFile, "utf-8");
 
-    const finalData = [];
+    const leftData: any = [];
+    const middleData: any = [];
+    const rightData: any = [];
 
     // console.log(data);
     const yamlData = parse(data);
 
-    const tiles = yamlData.config?.tiles;
     const map: Record<string, (config: any, key: number) => Promise<any>> = {
       jellyfin: async (config: any, key: number) => {
         return await jellyApi(
           config?.apikey,
           config?.ip,
           config?.port,
-          tiles,
           config?.config,
           key,
         );
@@ -91,7 +93,24 @@ async function run() {
           config?.apikey,
           config?.ip,
           config?.port,
-          tiles,
+          config?.config,
+          key,
+        );
+      },
+      radarr: async (config: any, key: number) => {
+        return await radarrApi(
+          config?.apikey,
+          config?.ip,
+          config?.port,
+          config?.config,
+          key,
+        );
+      },
+      sonarr: async (config: any, key: number) => {
+        return await sonarrApi(
+          config?.apikey,
+          config?.ip,
+          config?.port,
           config?.config,
           key,
         );
@@ -101,35 +120,81 @@ async function run() {
           config?.apikey,
           config?.ip,
           config?.port,
-          tiles,
           config?.config,
           key,
         );
       },
       github: async (config: any, key: number) => {
-        return await gitHubApi(config?.apikey, tiles, config?.config, key);
+        return await gitHubApi(config?.apikey, config?.config, key);
       },
     };
-    let key = 1;
-    if (yamlData.apps) {
-      const order = Object.keys(yamlData.apps);
+    if (yamlData?.config?.dataversion == 1) {
+      if (yamlData.apps.left) {
+        const order = Object.keys(yamlData.apps.left);
+        let leftKey = 1;
 
-      for (const app of order) {
-        const config = yamlData.apps[app];
-        if (typeof map[app] == "function" && config) {
-          const data = await map[app](config, key);
-          key += 1;
-          finalData.push(data);
-        } else {
-          console.warn(
-            `Could not find valid app, this could be caused by the app not yet supporting this service or a typo!`,
-          );
+        for (const item of order) {
+          const config = yamlData.apps.left[item].widget;
+          const app = config.type;
+          if (typeof map[app] == "function" && config) {
+            const data = await map[app](config, leftKey);
+            leftKey += 1;
+            leftData.push(data);
+          } else {
+            console.warn(
+              `Could not find valid app, this could be caused by the app not yet supporting this service or a typo!`,
+            );
+          }
+        }
+      }
+      if (yamlData.apps.middle) {
+        const order = Object.keys(yamlData.apps.middle);
+        let middleKey = 1;
+
+        for (const item of order) {
+          const config = yamlData.apps.middle[item].widget;
+          console.log(config);
+          const app = config.type;
+          if (typeof map[app] == "function" && config) {
+            const data = await map[app](config, middleKey);
+            middleKey += 1;
+            middleData.push(data);
+          } else {
+            console.warn(
+              `Could not find valid app, this could be caused by the app not yet supporting this service or a typo!`,
+            );
+          }
+        }
+      }
+      if (yamlData.apps.right) {
+        const order = Object.keys(yamlData.apps.right);
+        let rightKey = 1;
+
+        for (const item of order) {
+          const config = yamlData.apps.right[item].widget;
+          const app = config.type;
+
+          if (typeof map[app] == "function" && config) {
+            const data = await map[app](config, rightKey);
+            rightKey += 1;
+            rightData.push(data);
+          } else {
+            console.warn(
+              `Could not find valid app, this could be caused by the app not yet supporting this service or a typo!`,
+            );
+          }
         }
       }
     }
 
-    dashboardData = <div className="dashboardBoxMain">{finalData}</div>;
-    return <div className="data">{dashboardData}</div>;
+    dashboardData = (
+      <div className="dashboardBoxMain">
+        <div className="dashboardBoxMainLeft">{leftData}</div>
+        <div className="dashboardBoxMainMiddle">{middleData}</div>
+        <div className="dashboardBoxMainRight">{rightData}</div>
+      </div>
+    );
+    return dashboardData;
   } catch (err) {
     return <div className="error">{"" + err}</div>;
   }

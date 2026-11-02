@@ -88,7 +88,7 @@ async function gitHubData(apiKey, config) {
 
     for (let i = 0; i < releases.length; i++) {
       const currentRepo = releases[i];
-      console.log(currentRepo);
+      // console.log(currentRepo);
       const releaseTime = new Date(currentRepo.released);
       const currentTime = new Date();
       const timeDifference = currentTime - releaseTime;
@@ -127,18 +127,17 @@ async function gitHubData(apiKey, config) {
   }
 }
 
-export async function gitHubApi(apiKey, tiles, config, key) {
+export async function gitHubApi(apiKey, config, key) {
   console.log("Sending api request to GitHub");
   try {
-    if (!tiles || !config || !key) {
+    if (!config || !key) {
       console.log("invalid input data");
-      console.log(!tiles);
       console.log(!config);
       console.log(!key);
       return;
     }
     return (
-      <div key={key} className={`dashboardBoxGitHub${tiles}`}>
+      <div key={key} className="dashboardBoxGitHub">
         <div className="dashboardBoxGitHubInfo">
           <div className="dashboardBoxGitHubIcon">
             <Image
@@ -153,12 +152,14 @@ export async function gitHubApi(apiKey, tiles, config, key) {
             <p>GitHub</p>
           </div>
         </div>
-        <Suspense>{gitHubData(apiKey, config)}</Suspense>
+        <Suspense fallback={<p className="loadingText">Loading...</p>}>
+          {gitHubData(apiKey, config)}
+        </Suspense>
       </div>
     );
   } catch (err) {
     return (
-      <div key={key} className={`dashboardBoxGithub${tiles}`}>
+      <div key={key} className="dashboardBoxGithub">
         <div className="dashboardBoxGitHubInfo">
           <p>GitHub - Error!</p>
         </div>
