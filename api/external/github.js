@@ -62,7 +62,7 @@ async function gitHubData(apiKey, config) {
   try {
     const releases = [];
     let key = 1;
-    console.log(config);
+    // console.log(config);
     if (config) {
       const order = Object.keys(config);
 

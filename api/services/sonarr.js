@@ -18,7 +18,7 @@ async function sonarrData(apiKey, ip, port, config) {
 
     const missingData = await missing.json();
     // console.log(missingData);
-    console.log("Missing: ", missingData.totalRecords);
+    // console.log("Missing: ", missingData.totalRecords);
 
     const queue = await fetch(`http://${ip}:${port}/api/v3/queue`, {
       method: "GET",
@@ -36,7 +36,7 @@ async function sonarrData(apiKey, ip, port, config) {
 
     const queueData = await queue.json();
     // console.log(queueData);
-    console.log("In queue: ", queueData.records.length);
+    // console.log("In queue: ", queueData.records.length);
 
     const series = await fetch(`http://${ip}:${port}/api/v3/series`, {
       method: "GET",
