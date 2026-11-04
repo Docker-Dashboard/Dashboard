@@ -10,7 +10,7 @@ function getCpuAverage() {
 
   cpus.forEach((core) => {
     for (const type in core.times) {
-      totalTick += core.times[type];
+      totalTick += core.times[type as keyof typeof core.times];
     }
     totalIdle += core.times.idle;
   });
