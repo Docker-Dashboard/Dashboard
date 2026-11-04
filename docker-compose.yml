@@ -1,6 +1,6 @@
 services:
   app:
-    image: node:24.21
+    image: node:26.13
     build: .
     container_name: app
     ports:
