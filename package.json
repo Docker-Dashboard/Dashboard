@@ -2,11 +2,11 @@
   "name": "dashboard",
   "version": "1.0.0",
   "private": true,
-  "packageManager": "pnpm@12.0.0",
+  "packageManager": "pnpm@12.16.1",
   "engines" : { 
     "pnpm" : ">=12.0.0 <13.0.0",
     "npm" : "please-use-pnpm",
-    "node" : ">=24.0.0 <26.0.0"
+    "node" : ">=26.0.0 <27.0.0"
   },
   "scripts": {
     "predev": "node -e \"if (!process.env.npm_config_user_agent.startsWith('pnpm')) { console.error('\\x1b[31m%s\\x1b[0m', 'Please use pnpm.'); process.exit(1); }\"",

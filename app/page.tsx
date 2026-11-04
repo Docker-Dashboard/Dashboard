@@ -1,8 +1,7 @@
 import React, { JSX, Suspense } from "react";
 import Image from "next/image";
 import { unstable_noStore } from "next/cache";
-import { access, constants, writeFile, mkdir } from "node:fs";
-import { readFile } from "node:fs/promises";
+import { readFile, writeFile, mkdir, access, constants } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import os from "node:os";
 import { parse } from "yaml";
@@ -49,31 +48,27 @@ const configDir =
     ? "/config"
     : join(process.cwd(), "config");
 
-access(configFile, constants.F_OK, (err) => {
-  console.log(`${configFile} ${err ? "does not exist" : "exists"}`);
-  const fileExists = err ? 0 : 1;
-  if (fileExists == 0) {
-    mkdir(configDir, { recursive: true }, (err) => {
-      if (err) throw err;
-    });
-    writeFile(configFile, defaultConfigContent, (err) => {
-      if (err) {
-        console.error(err);
-        throw err;
-      } else {
-        console.log("Default config file written successfully");
-      }
-    });
-  }
-});
-
-access(configFile, constants.R_OK, (err) => {
-  console.log(`${configFile} ${err ? "is not readable" : "is readable"}`);
-  dashboardData = <p>Error: Could not read config file</p>;
-});
+async function makeConfig() {
+  await mkdir(configDir, { recursive: true });
+  await writeFile(configFile, defaultConfigContent);
+}
 
 async function run() {
   try {
+    try{
+      await access(configFile, constants.F_OK,);
+    } catch (err) {
+      console.log(`${configFile} does not exist`);
+      await makeConfig();
+    }
+
+    try{
+      await access(configFile, constants.R_OK,);
+    } catch (err) {
+      console.log(`${configFile} is not readable`);
+      throw (err);
+    }
+
     const data = await readFile(configFile, "utf-8");
 
     const leftData: any = [];
@@ -137,7 +132,7 @@ async function run() {
       },
     };
     if (yamlData?.config?.configversion == 1) {
-      console.log(yamlData.apps.left)
+      // console.log(yamlData.apps.left)
       if (yamlData.apps.left) {
         const order = Object.keys(yamlData.apps.left);
         let leftKey = 1;
