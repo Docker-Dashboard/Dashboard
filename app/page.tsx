@@ -19,20 +19,24 @@ export const revalidate = 0;
 let dashboardData = <></>;
 
 const defaultConfigContent = `config:
-  tiles:
-    2
-  jellyfin:
-    ip:
-      "127.0.0.1"
-    port:
-      "8096"
-    apikey:
-      1234
-    tiles:
-      movies
-      series
-      episodes
-      songs`;
+  configversion:
+    1
+apps:
+  middle:
+    - widget:
+        type:
+          jellyfin
+        ip:
+          "127.0.0.1"
+        port:
+          "8096"
+        apikey:
+          "abcd"
+        config:
+          movies
+          series
+          episodes
+          songs`;
 
 const configFile =
   process.env.NODE_ENV == "production"
@@ -128,7 +132,7 @@ async function run() {
         return await gitHubApi(config?.apikey, config?.config, key);
       },
     };
-    if (yamlData?.config?.dataversion == 1) {
+    if (yamlData?.config?.configversion == 1) {
       if (yamlData.apps.left) {
         const order = Object.keys(yamlData.apps.left);
         let leftKey = 1;
@@ -147,6 +151,7 @@ async function run() {
           }
         }
       }
+      // console.log(yamlData.apps.middle)
       if (yamlData.apps.middle) {
         const order = Object.keys(yamlData.apps.middle);
         let middleKey = 1;
