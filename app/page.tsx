@@ -12,6 +12,7 @@ import { radarrApi } from "@/api/services/radarr.js";
 import { piholeApi } from "@/api/services/pihole.js";
 import { seerrApi } from "@/api/services/seerr.js";
 import { sonarrApi } from "@/api/services/sonarr.js";
+import { stats } from "@/api/system/stats.js"
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -131,8 +132,12 @@ async function run() {
       github: async (config: any, key: number) => {
         return await gitHubApi(config?.apikey, config?.config, key);
       },
+      stats: async (config: any, key: number) => {
+        return await stats(config?.config, key);
+      },
     };
     if (yamlData?.config?.configversion == 1) {
+      console.log(yamlData.apps.left)
       if (yamlData.apps.left) {
         const order = Object.keys(yamlData.apps.left);
         let leftKey = 1;
@@ -158,7 +163,7 @@ async function run() {
 
         for (const item of order) {
           const config = yamlData.apps.middle[item].widget;
-          console.log(config);
+          // console.log(config);
           const app = config.type;
           if (typeof map[app] == "function" && config) {
             const data = await map[app](config, middleKey);

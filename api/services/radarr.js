@@ -17,7 +17,7 @@ async function radarrData(apiKey, ip, port, config) {
     }
 
     const missingData = await missing.json();
-    console.log("Missing: ", missingData.totalRecords);
+    // console.log("Missing: ", missingData.totalRecords);
 
     const queue = await fetch(`http://${ip}:${port}/api/v3/queue`, {
       method: "GET",

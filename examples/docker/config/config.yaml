@@ -1,31 +1,106 @@
 config:
-  tiles:
-    2
+  configversion:
+    1
 apps:
-  jellyfin:
-    ip:
-      "127.0.0.1"
-    port:
-      "8096"
-    apikey:
-      "jellyfinApiKey"
-    config:
-      movies
-      series
-      episodes
-      artists
-      programs
-      trailers
-      songs
-      albums
-      musicvideos
-      boxsets
-      books
-      items
-  seerr:
-    ip:
-      "127.0.0.1"
-    port:
-      "5055"
-    apikey:
-      "seerrApiKey"
+  left:
+    - widget:
+        type:
+          github
+        apikey:
+          ""
+        config:
+          - docker-dashboard/dashboard
+          - jellyfin/jellyfin
+          - seerr-team/seerr
+    - widget:
+        type:
+          stats
+        config:
+          cpu
+          memory
+  middle:
+    - widget:
+        type:
+          jellyfin
+        ip:
+          "127.0.0.1"
+        port:
+          "8096"
+        apikey:
+          "abcd"
+        config:
+          movies
+          series
+          episodes
+          artists
+          programs
+          trailers
+          songs
+          albums
+          musicvideos
+          boxsets
+          books
+          items
+    - widget:
+        type:
+          seerr
+        ip:
+          "127.0.0.1"
+        port:
+          "5055"
+        apikey:
+          "1a2b3c4d"
+        config:
+          total
+          movies
+          series
+          pending
+          approved
+          declined
+          processing
+          available
+          completed
+    - widget:
+        type:
+          radarr
+        ip:
+          "127.0.0.1"
+        port:
+          "7878"
+        apikey:
+          ""
+        config:
+          missing
+          queue
+          count
+          total
+    - widget:
+        type:
+          sonarr
+        ip:
+          "127.0.0.1"
+        port:
+          "8989"
+        apikey:
+          ""
+        config:
+          missing
+          queue
+          total
+  right:
+    - widget:
+        type:
+          pihole
+        ip:
+          "127.0.0.1"
+        port:
+          "80"
+        apikey:
+          "password"
+        config:
+          total
+          blocked
+          forwarded
+          cached
+          clientsactive
+          clientstotal

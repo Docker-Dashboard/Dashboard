@@ -56,7 +56,8 @@ body {
 .dashboardBoxPiHole,
 .dashboardBoxGitHub,
 .dashboardBoxRadarr,
-.dashboardBoxSonarr {
+.dashboardBoxSonarr,
+.dashboardBoxStats {
   align-items: center;
   background-color: #28282877;
   border-radius: 10px;
@@ -79,7 +80,8 @@ body {
 .dashboardBoxPiHoleName,
 .dashboardBoxGitHubName,
 .dashboardBoxRadarrName,
-.dashboardBoxSonarrName {
+.dashboardBoxSonarrName,
+.dashboardBoxStatsName {
   font-size: clamp(3.5px, 3.2vh, 35px);
 }
 
@@ -88,7 +90,8 @@ body {
 .dashboardDataPiHoleContent,
 .dashboardDataGitHubContent,
 .dashboardDataRadarrContent,
-.dashboardDataSonarrContent {
+.dashboardDataSonarrContent,
+.dashboardDataStatsContent {
   /* align-items: flex-start; */
   display: flex;
   flex-direction: row;
@@ -112,7 +115,8 @@ body {
 .dashboardBoxPiHoleInfo,
 .dashboardBoxGitHubInfo,
 .dashboardBoxRadarrInfo,
-.dashboardBoxSonarrInfo {
+.dashboardBoxSonarrInfo,
+.dashboardBoxStatsInfo {
   /* align-items: flex-start; */
   display: flex;
   flex-direction: row;
@@ -175,4 +179,42 @@ div.dashboardDataGitHubReleases {
 a {
   width: 100%;
   height: fit-content;
+}
+
+.dashboardDataStatsBox {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.progressBarCpu,
+.progressBarMemory {
+  width: 100%;
+}
+
+.progressBarCpu::-webkit-progress-bar,
+.progressBarMemory::-webkit-progress-bar {
+  background-color: #333333;
+  width: 100%;
+  box-sizing: border-box;
+  height: 5px;
+  border-radius: 15px;
+}
+
+.progressBarCpu::-webkit-progress-value,
+.progressBarMemory::-webkit-progress-value {
+  background-color: #59595a;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 15px;
+}
+
+.progressBarCpu::-moz-progress-bar,
+.progressBarMemory::-moz-progress-bar {
+  height: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 15px;
 }
