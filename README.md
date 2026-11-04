@@ -4,10 +4,22 @@ This is a [Next.js](https://nextjs.org) made to be run within docker.
 
 ![Next Build](https://github.com/Docker-Dashboard/Dashboard/actions/workflows/build.yml/badge.svg)
 ![Docker Build](https://github.com/Docker-Dashboard/Dashboard/actions/workflows/dockerBuild.yml/badge.svg)
+![Commits since last release](https://img.shields.io/github/commits-since/Docker-Dashboard/Dashboard/latest?logo=github&amp;label=Commits%20since%20last%20release)
+![Commits in the last month](https://img.shields.io/github/commit-activity/m/Docker-Dashboard/Dashboard?logo=github&amp;label=Commits%20since%20last%20month)
+![Last commit](https://img.shields.io/github/last-commit/Docker-Dashboard/Dashboard?logo=github&amp;label=Last%20commit)
+![Repo Size](https://img.shields.io/github/repo-size/Docker-Dashboard/Dashboard?logo=github&amp;label=Repo%20size)
+![Downloads](https://img.shields.io/github/downloads/Docker-Dashboard/Dashboard/total?logo=github&amp;label=GitHub%20Downloads)
+![Docker Pulls](https://img.shields.io/docker/pulls/dockerdashboardteam/dashboard?label=Docker%20pulls)
 
 ## Getting Started
 
 You will need to clone this repo to your computer to run it
+
+Make sure to also install dependancies!
+
+```bash
+pnpm install
+```
 
 ### Running in Docker
 
@@ -56,20 +68,8 @@ node .next/standalone/server.js
 First, run the development server:
 
 ```bash
-npm run dev
-```
-<!-- or
-```bash
-yarn dev
-```
-or
-```bash
 pnpm dev
 ```
-or
-```bash
-bun dev
-``` -->
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
