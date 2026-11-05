@@ -3,11 +3,11 @@
 # ============================================
 
 # IMPORTANT: Node.js Version Maintenance
-# This Dockerfile uses Node.js 26.13-alpine, which was the latest LTS version at the time of writing.
+# This Dockerfile uses Node.js 26.13-alpine, which is the latest LTS version at the time of writing.
 # To ensure security and compatibility, regularly update the NODE_VERSION ARG to the latest LTS version.
-ARG NODE_VERSION=26.13-alpine
+# ARG NODE_VERSION=26.13-alpine
 
-FROM node:${NODE_VERSION} AS dependencies
+FROM node:26.13-alpine AS dependencies
 
 RUN npm install -g pnpm
 
@@ -15,7 +15,7 @@ RUN npm install -g pnpm
 WORKDIR /app
 
 # Copy package-related files first to leverage Docker's caching mechanism
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* pnpm-workspace.yaml* .npmrc* ./
+COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml* .npmrc* ./
 
 # Install project dependencies with frozen lockfile for reproducible builds
 RUN pnpm install --frozen-lockfile;
@@ -24,7 +24,7 @@ RUN pnpm install --frozen-lockfile;
 # Stage 2: Build Next.js application in standalone mode
 # ============================================
 
-FROM node:${NODE_VERSION} AS builder
+FROM node:26.13-alpine AS builder
 
 RUN npm install -g pnpm
 
@@ -56,7 +56,7 @@ RUN pnpm build
 # Stage 3: Run Next.js application
 # ============================================
 
-FROM node:${NODE_VERSION} AS runner
+FROM node:26.13-alpine AS runner
 
 # Set working directory
 WORKDIR /app
@@ -92,8 +92,6 @@ USER node
 
 # Expose port 3000 to allow HTTP traffic
 EXPOSE 3000
-
-# RUN ls -a
 
 # Start Next.js standalone server
 CMD ["node", "server.js"]
