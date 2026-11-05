@@ -2,14 +2,21 @@
 
 This is a [Next.js](https://nextjs.org) made to be run within docker.
 
-![Next Build](https://github.com/Docker-Dashboard/Dashboard/actions/workflows/build.yml/badge.svg)
-![Docker Build](https://github.com/Docker-Dashboard/Dashboard/actions/workflows/dockerBuild.yml/badge.svg)
+![Build](https://github.com/Docker-Dashboard/Dashboard/actions/workflows/build.yml/badge.svg)
+![Push to DockerHub](https://github.com/Docker-Dashboard/Dashboard/actions/workflows/docker-publish.yml/badge.svg)
+
 ![Commits since last release](https://img.shields.io/github/commits-since/Docker-Dashboard/Dashboard/latest?logo=github&amp;label=Commits%20since%20last%20release)
 ![Commits in the last month](https://img.shields.io/github/commit-activity/m/Docker-Dashboard/Dashboard?logo=github&amp;label=Commits%20since%20last%20month)
 ![Last commit](https://img.shields.io/github/last-commit/Docker-Dashboard/Dashboard?logo=github&amp;label=Last%20commit)
 ![Repo Size](https://img.shields.io/github/repo-size/Docker-Dashboard/Dashboard?logo=github&amp;label=Repo%20size)
+![Github release version](https://img.shields.io/github/v/release/Docker-Dashboard/dashboard?logo=github&amp;label=Release)
+![License](https://img.shields.io/github/license/Docker-Dashboard/dashboard?logo=github&amp;label=License)
 ![Downloads](https://img.shields.io/github/downloads/Docker-Dashboard/Dashboard/total?logo=github&amp;label=GitHub%20Downloads)
-![Docker Pulls](https://img.shields.io/docker/pulls/dockerdashboardteam/dashboard?label=Docker%20pulls)
+
+![Docker Pulls](https://img.shields.io/docker/pulls/dockerdashboardteam/dashboard?logo=docker&amp;label=Docker%20pulls)
+![Docker stars](https://img.shields.io/docker/stars/dockerdashboardteam/dashboard?logo=docker&amp;label=Docker%20stars)
+![Docker image size](https://img.shields.io/docker/image-size/dockerdashboardteam/dashboard/latest?logo=docker&amp;label=Docker%20image%20size)
+![Version](https://img.shields.io/docker/v/dockerdashboardteam/dashboard/latest?logo=docker&amp;label=Docker%20image%20version)
 
 ## Getting Started
 
