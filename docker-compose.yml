@@ -1,8 +1,8 @@
 services:
   app:
-    image: node:26.13
+    image: node:26.13-alpine
     build: .
-    container_name: app
+    container_name: dashboard
     ports:
       - 3000:3000
     restart: unless-stopped

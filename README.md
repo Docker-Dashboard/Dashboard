@@ -13,34 +13,14 @@ This is a [Next.js](https://nextjs.org) made to be run within docker.
 
 ## Getting Started
 
-You will need to clone this repo to your computer to run it
-
-Make sure to also install dependancies!
-
-```bash
-pnpm install
-```
-
 ### Running in Docker
 
-To run this project within docker, run:
-
-```bash
-docker compose up --build
-```
-
-Or build an image with :
-
-```bash
-docker build -t dashboard:latest
-```
-
-and make a docker-compose.yml file:
+To run this project within docker, make a docker-compose.yml file:
 
 ```bash
 services:
   dashboard:
-    image: dashboard:latest
+    image: dockerdashboardteam/dashboard:latest
     container_name: dashboard
     volumes:
       - /path/to/config:/config
@@ -49,23 +29,19 @@ services:
     restart: unless-stopped
 ```
 
-### Running without Docker
-
-To run without Docker, you will need to first build the page:
-
-```bash
-npm run build
-```
-
-Then you can start the server:
-
-```bash
-node .next/standalone/server.js
-```
-
 ### Running with development server
 
-First, run the development server:
+First, download the repository and install all packages:
+
+```bash
+git clone https://github.com/Docker-Dashboard/Dashboard.git
+```
+
+```bash
+pnpm install
+```
+
+Then run the development server:
 
 ```bash
 pnpm dev
@@ -116,7 +92,6 @@ The following are planned to be added in the future:
 - Calendar
 - Weather
 - Live Twitch channels
-<!-- No idea on how to add Twitch channels to dashboard, feel free to try, it must only get which channels from user and nothing else -->
 - Home Assistant
 - Uptime Kuma
 - and many more!
