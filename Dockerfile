@@ -3,7 +3,7 @@
 # ============================================
 
 # IMPORTANT: Node.js Version Maintenance
-# This Dockerfile uses Node.js 24.21-alpine, which was the latest LTS version at the time of writing.
+# This Dockerfile uses Node.js 26.13-alpine, which was the latest LTS version at the time of writing.
 # To ensure security and compatibility, regularly update the NODE_VERSION ARG to the latest LTS version.
 ARG NODE_VERSION=26.13-alpine
 
