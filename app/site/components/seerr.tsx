@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Suspense } from "react";
 
-async function seerrData(apiKey, ip, port, config) {
+async function seerrData(apiKey: string, ip: string, port: string, config: any) {
   try {
     const response = await fetch(`http://${ip}:${port}/api/v1/request/count`, {
       method: "GET",
@@ -72,7 +72,7 @@ async function seerrData(apiKey, ip, port, config) {
   }
 }
 
-export async function seerrApi(apiKey, ip, port, config, key) {
+export async function seerrApi(apiKey: string, ip: string, port: string, config: any, key: number) {
   console.log("Sending api request to Seerr");
   try {
     if (!apiKey || !ip || !port || !config || !key) {

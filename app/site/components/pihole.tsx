@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Suspense } from "react";
 
-async function piholeData(apiKey, ip, port, config) {
+async function piholeData(apiKey: string, ip: string, port: string, config: any) {
   try {
     const sessionRaw = await fetch(`http://${ip}:${port}/api/auth`, {
       method: "POST",
@@ -97,7 +97,7 @@ async function piholeData(apiKey, ip, port, config) {
   }
 }
 
-export async function piholeApi(apiKey, ip, port, config, key) {
+export async function piholeApi(apiKey: string, ip: string, port: string, config: any, key: number) {
   console.log("Sending api request to PiHole");
   try {
     if (!apiKey || !ip || !port || !config || !key) {

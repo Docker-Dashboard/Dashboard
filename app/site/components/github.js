@@ -4,29 +4,17 @@ import { Suspense } from "react";
 async function getGitHubReleases(apiKey, userAndRepo) {
   // console.log(userAndRepo);
   // return userAndRepo;
-  let response;
-  if (!apiKey) {
-    response = await fetch(
-      `https://api.github.com/repos/${userAndRepo}/releases/latest`,
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/vnd.github+json",
-        },
+  const response = await fetch(
+    `https://api.github.com/repos/${userAndRepo}/releases/latest`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        Accept: "application/vnd.github+json",
       },
-    );
-  } else {
-    response = await fetch(
-      `https://api.github.com/repos/${userAndRepo}/releases/latest`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          Accept: "application/vnd.github+json",
-        },
-      },
-    );
-  }
+    },
+  );
+  console.log(response);
 
   if (!response.ok && response.status != 404) {
     throw `Api response error ${response.status}`;

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Suspense } from "react";
 
-async function sonarrData(apiKey, ip, port, config) {
+async function sonarrData(apiKey: string, ip: string, port: string, config: any) {
   try {
     const missing = await fetch(`http://${ip}:${port}/api/v3/wanted/missing`, {
       method: "GET",
@@ -84,7 +84,7 @@ async function sonarrData(apiKey, ip, port, config) {
   }
 }
 
-export async function sonarrApi(apiKey, ip, port, config, key) {
+export async function sonarrApi(apiKey: string, ip: string, port: string, config: any, key: number) {
   console.log("Sending api request to Sonarr");
   try {
     if (!apiKey || !ip || !port || !config || !key) {
