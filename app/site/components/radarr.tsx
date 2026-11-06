@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Suspense } from "react";
 
-async function radarrData(apiKey, ip, port, config) {
+async function radarrData(apiKey: string, ip: string, port: string, config: any) {
   try {
     const missing = await fetch(`http://${ip}:${port}/api/v3/wanted/missing`, {
       method: "GET",
@@ -99,7 +99,7 @@ async function radarrData(apiKey, ip, port, config) {
   }
 }
 
-export async function radarrApi(apiKey, ip, port, config, key) {
+export async function radarrApi(apiKey: string, ip: string, port: string, config: any, key: number) {
   console.log("Sending api request to Radarr");
   try {
     if (!apiKey || !ip || !port || !config || !key) {

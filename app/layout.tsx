@@ -12,10 +12,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Dashboard",
-  description: "A custom dashboard for all of your self hosted apps!",
-};
+// export const metadata: Metadata = {
+//   title: "Dashboard",
+//   description: "A custom dashboard for all of your self hosted apps!",
+// };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

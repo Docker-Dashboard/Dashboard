@@ -5,11 +5,7 @@ const nextConfig: NextConfig = {
     "127.0.0.1",
     "http://127.0.0.1:3000",
     "localhost:3000",
-    "192.168.0.9:3000",
   ],
-  /* config options here */
-  // cacheComponents: true,
-  // partialPrefetching: true,
   output: "standalone",
   turbopack: {
     rules: {
@@ -19,19 +15,8 @@ const nextConfig: NextConfig = {
       },
     },
   },
-  // watchOptions: {
-  //   aggregateTimeout: 200,
-  // },
   logging: {
-    browserToTerminal: false,
-  },
-  webpack(config, { dev }) {
-    if (dev) {
-      config.watchOptions = {
-        aggregateTimeout: 1500,
-      };
-    }
-    return config;
+    browserToTerminal: true,
   },
 };
 

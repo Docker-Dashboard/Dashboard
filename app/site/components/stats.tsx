@@ -1,7 +1,7 @@
 import { Suspense } from "react";
-import { StatsData } from "@/components/stats";
+import { StatsData } from "@/app/site/components/stats-client";
 
-export async function stats(config, key) {
+export async function stats(config: any, key: number) {
   console.log("Getting host stats");
   try {
     if (!config || !key) {
@@ -18,7 +18,6 @@ export async function stats(config, key) {
             </div>
           </div>
           <Suspense fallback={<p className="loadingText">Loading...</p>}>
-            {console.log(config)}
             <StatsData config={config} />
           </Suspense>
         </div>

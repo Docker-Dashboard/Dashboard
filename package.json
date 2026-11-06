@@ -1,7 +1,7 @@
 {
   "name": "dashboard",
   "description": "A custom dashboard for all of your self-hosted apps!",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "license": "GPL-3.0",
   "repository": {
@@ -21,7 +21,9 @@
   "scripts": {
     "predev": "node -e \"if (!process.env.npm_config_user_agent.startsWith('pnpm')) { console.error('\\x1b[31m%s\\x1b[0m', 'Please use pnpm.'); process.exit(1); }\"",
     "dev": "next dev",
+    "prebuild": "node -e \"if (!process.env.npm_config_user_agent.startsWith('pnpm')) { console.error('\\x1b[31m%s\\x1b[0m', 'Please use pnpm.'); process.exit(1); }\"",
     "build": "next build",
+    "prestart": "node -e \"if (!process.env.npm_config_user_agent.startsWith('pnpm')) { console.error('\\x1b[31m%s\\x1b[0m', 'Please use pnpm.'); process.exit(1); }\"",
     "start": "next start",
     "preinstall": "npx only-allow pnpm"
   },

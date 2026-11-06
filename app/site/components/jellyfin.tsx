@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Suspense } from "react";
 
-async function jellyfinData(apiKey, ip, port, config) {
+async function jellyfinData(apiKey: string, ip: string, port: string, config: any) {
   try {
     const response = await fetch(`http://${ip}:${port}/Items/Counts`, {
       method: "GET",
@@ -94,7 +94,7 @@ async function jellyfinData(apiKey, ip, port, config) {
   }
 }
 
-export async function jellyApi(apiKey, ip, port, config, key) {
+export async function jellyApi(apiKey: string, ip: string, port: string, config: any, key: number) {
   console.log("Sending api request to Jellyfin");
   try {
     if (!apiKey || !ip || !port || !config || !key) {
